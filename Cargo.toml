@@ -1,0 +1,25 @@
+[package]
+name = "btmon"
+version = "0.1.0"
+edition = "2024"
+authors = ["sivchari"]
+description = "A CLI tool to monitor Bluetooth device battery levels on macOS"
+license = "MIT"
+repository = "https://github.com/sivchari/btmon"
+
+[dependencies]
+clap = { version = "4", features = ["derive"] }
+serde = { version = "1", features = ["derive"] }
+serde_json = "1"
+tracing = "0.1"
+tracing-subscriber = { version = "0.3", features = ["json", "env-filter"] }
+objc2 = "0.6"
+objc2-foundation = { version = "0.3", features = ["NSArray", "NSString", "NSObject"] }
+
+[target.'cfg(target_os = "macos")'.dependencies]
+objc2-io-bluetooth = "0.3"
+objc2-core-bluetooth = { version = "0.3", features = ["CBCentralManager", "CBPeripheral", "CBService", "CBCharacteristic", "CBUUID", "CBManager"] }
+
+[profile.release]
+lto = true
+strip = true
